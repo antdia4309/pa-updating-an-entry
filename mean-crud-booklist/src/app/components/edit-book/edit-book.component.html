@@ -1,0 +1,55 @@
+<div class="container">
+  <h2>Edit Book</h2>
+
+  <!-- Display error message if any -->
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <!-- Show loading spinner while fetching data -->
+  <div *ngIf="loading" class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+
+  <!-- Book editing form -->
+  <form [formGroup]="bookForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+    <div class="form-group">
+      <label>ISBN</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="isbn"
+        required
+        minlength="10"
+        maxlength="13"
+      />
+      <div
+        *ngIf="bookForm.get('isbn')?.invalid && bookForm.get('isbn')?.touched"
+        class="text-danger"
+      >
+        ISBN must be between 10 and 13 characters.
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Title</label>
+      <input type="text" class="form-control" formControlName="title" required />
+    </div>
+    <div class="form-group">
+      <label>Author</label>
+      <input type="text" class="form-control" formControlName="author" />
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <input class="form-control" formControlName="description" />
+    </div>
+    <div class="form-group">
+      <label>Published Year</label>
+      <input type="number" class="form-control" formControlName="published_year" />
+    </div>
+    <div class="form-group">
+      <label>Publisher</label>
+      <input type="text" class="form-control" formControlName="publisher" />
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="!bookForm.valid">
+      Update
+    </button>
+  </form>
+</div>
